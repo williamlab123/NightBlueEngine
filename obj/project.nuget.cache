@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "K6UBsdTK7lTkP0Wlp5pExkAhI+j9teOTddbBpjByDbUAowz1Yfsg2xAG/buwLyxU4dtOcn89dm7Z2zo2QmiZFA==",
+  "success": true,
+  "projectFilePath": "/home/william/Desktop/NightBlueEngine/NightBlueEngine.csproj",
+  "expectedPackageFiles": [
+    "/home/william/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/william/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.0/microsoft.aspnetcore.app.ref.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,17 @@
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/NightBlueEngine
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/NightBlueEngine.deps.json
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/NightBlueEngine.runtimeconfig.json
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/NightBlueEngine.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/NightBlueEngine.pdb
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.GeneratedMSBuildEditorConfig.editorconfig
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.AssemblyInfoInputs.cache
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.AssemblyInfo.cs
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.csproj.CoreCompileInputs.cache
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.dll
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/refint/NightBlueEngine.dll
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.pdb
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.genruntimeconfig.cache
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/ref/NightBlueEngine.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.csproj.AssemblyReference.cache
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.csproj.CopyComplete
