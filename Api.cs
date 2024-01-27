@@ -1,130 +1,139 @@
 using System;
-using System.Net;
-using System.Threading;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 
-
-// This class stores the data the program use to make the simulations
-// Also, these are the allowed parameters for the body request 
-public class Requestbody
+namespace NightBlueEngine
 {
-    public double Power { get; set; }
-    public double Tork { get; set; }
-    public double Weight { get; set; }
-    public double AerodynamicCoefficient { get; set; }
-    public double CurrentPower { get; set; }
-    public double PsiTurbo { get; set; }
-    public double Displacement { get; set; }
-    public double TurboEfficiency { get; set; }
-    public double AirFuelRatio { get; set; }
-    public double targetSpeed { get; set; }
-}
 
-public class Api
-{
-    public static string? body { get; set; }
-    public static string? LastUrl { get; set; }
-    public static string RequestBody { get; private set; }
-    public static Requestbody LastRequestbody { get; private set; }
-
-    public static bool Server()
+    // These are the allowed body parameters
+    public class Requestbody
     {
-        string url = "http://localhost:8080/";
+        public double Power { get; set; }
+        public double Tork { get; set; }
+        public double Weight { get; set; }
+        public double AerodynamicCoefficient { get; set; }
+        public double CurrentPower { get; set; }
+        public double PsiTurbo { get; set; }
+        public double Displacement { get; set; }
+        public double TurboEfficiency { get; set; }
+        public double AirFuelRatio { get; set; }
+        public double TargetSpeed { get; set; }
+    }
 
-        using (HttpListener listener = new HttpListener())
+    public class Api
+    {
+        // public string? Body { get; set; }
+        public string? LastUrl { get; set; }
+        public Requestbody? LastRequestbody { get; private set; }
+
+        public bool server()
         {
-            listener.Prefixes.Add(url);
-            listener.Start();
-            Console.WriteLine($"Listening for requests at {url}");
+            string url = "http://localhost:8080/";
 
-            ThreadPool.QueueUserWorkItem((state) =>
+            using (HttpListener listener = new HttpListener())
             {
-                while (listener.IsListening)
+                listener.Prefixes.Add(url);
+                listener.Start();
+                Console.WriteLine($"Listening for requests at {url}");
+
+                ThreadPool.QueueUserWorkItem((state) =>
                 {
-                    try
+                    while (listener.IsListening)
                     {
-                        HttpListenerContext context = listener.GetContext();
-                        ProcessRequest(context);
+                        try
+                        {
+                            HttpListenerContext context = listener.GetContext();
+                            processRequest(context);
+                        }
+                        catch (HttpListenerException)
+                        {
+                            break;
+                        }
                     }
-                    catch (HttpListenerException)
-                    {
+                });
+
+                Console.WriteLine("Press Enter to stop the server.");
+
+                var keyInfo = Console.ReadKey();
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    listener.Stop();
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public void processRequest(HttpListenerContext context)
+        {
+            double? result_simulation;
+            try
+            {
+                string body;
+                LastUrl = context.Request.RawUrl;
+                System.Console.WriteLine(LastUrl);
+
+                using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+                {
+                    body = reader.ReadToEnd();
+                    LastRequestbody = JsonConvert.DeserializeObject<Requestbody>(body);
+                }
+
+                #region Routes
+                switch (LastUrl)
+                {
+                    case "/":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ResetColor();
+                        result_simulation = null;
                         break;
-                    }
+                    case "/simulatespeed":
+                        result_simulation = Simulation.simulateSpeed(LastRequestbody.Power,
+                        LastRequestbody.Weight, LastRequestbody.AerodynamicCoefficient);
+                        System.Console.WriteLine("test");
+                        break;
+                    case "/simulatepower":
+                        result_simulation = Simulation.simulatePower(LastRequestbody.CurrentPower,
+                        LastRequestbody.PsiTurbo,
+                             LastRequestbody.Displacement, LastRequestbody.TurboEfficiency,
+                             LastRequestbody.AirFuelRatio);
+                        break;
+                    case "/simulatetts":
+                        result_simulation = Simulation.timeToGet100(LastRequestbody.Power,
+                        LastRequestbody.Weight, LastRequestbody.Tork);
+                        break;
+
+                    default:
+                        result_simulation = 404;
+                        break;
                 }
-            });
+                #endregion
 
-            Console.WriteLine("Press Enter to stop the server.");
-            // Console.ReadLine();
+                string? responseBody = result_simulation.ToString()[0] != '0' ? result_simulation.ToString()
+                : "There were no simulations";
 
-            var keyInfo = Console.ReadKey();
-            if (keyInfo.Key == ConsoleKey.Enter)
-            {
-                listener.Stop();
-                // System.Console.WriteLine("sexo");
-                return true;
+                byte[] responseBytes = Encoding.UTF8.GetBytes(responseBody);
+                context.Response.ContentType = "text/plain";
+                // context.Response.ContentEncoding = Encoding.UTF8;
+                context.Response.OutputStream.Write(responseBytes, 0, responseBytes.Length);
             }
-            return false;
-
-        }
-    }
-
-    public static bool hasSimulationParameters(string lastRequestBody)
-    {
-        var parameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(lastRequestBody);
-
-        return parameters.ContainsKey("Power") ||
-               parameters.ContainsKey("Tork") ||
-               parameters.ContainsKey("Weight") ||
-               parameters.ContainsKey("AerodynamicCoefficient") ||
-               parameters.ContainsKey("CurrentPower") ||
-               parameters.ContainsKey("PsiTurbo") ||
-               parameters.ContainsKey("Displacement") ||
-               parameters.ContainsKey("TurboEfficiency") ||
-               parameters.ContainsKey("AirFuelRatio") ||
-               parameters.ContainsKey("targetSpeed");
-    }
-
-    public static string ProcessRequest(HttpListenerContext context)
-    {
-        string body;
-        LastUrl = context.Request.RawUrl;
-
-        try
-        {
-            using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            catch (Exception ex)
             {
-                body = reader.ReadToEnd();
-                LastRequestbody = JsonConvert.DeserializeObject<Requestbody>(body);
-
-
-                if (!hasSimulationParameters(LastRequestbody.ToString()))
-                {
-                    System.Console.WriteLine("The request body does not contain the required parameters");
-                }
-                else System.Console.WriteLine("test");
+                Console.WriteLine($"Error processing request: {ex.Message}");
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+            finally
+            {
+                context.Response.Close();
             }
 
-            // Console.WriteLine($"Received request with body: {body}");
-            byte[] responseBytes = Encoding.UTF8.GetBytes("Request received successfully.");
-            context.Response.ContentType = "text/plain";
-            context.Response.ContentEncoding = Encoding.UTF8;
-            context.Response.OutputStream.Write(responseBytes, 0, responseBytes.Length);
-            body = body;
 
-            return body;
+            
+            
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing request: {ex.Message}");
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            return null;
-        }
-        finally
-        {
-            context.Response.Close();
-        }
-
     }
 }

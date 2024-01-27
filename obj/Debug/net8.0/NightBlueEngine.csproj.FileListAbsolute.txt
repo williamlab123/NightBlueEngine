@@ -15,3 +15,16 @@
 /home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Newtonsoft.Json.dll
 /home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.csproj.AssemblyReference.cache
 /home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.csproj.CopyComplete
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Binder.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.Configuration.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.Console.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+/home/william/Desktop/NightBlueEngine/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/home/william/Desktop/NightBlueEngine/obj/Debug/net8.0/NightBlueEngine.sourcelink.json

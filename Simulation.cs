@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
+using static System.Math;
 
 
 namespace NightBlueEngine
@@ -25,7 +26,7 @@ namespace NightBlueEngine
             }
             // Average pressure of an engine in PSI
             const double averageEnginePressure = 14.7;
-
+            
             // Calculate the total pressure
             double TotalPsi = ((psiTurbo * 0.3) + averageEnginePressure);
 

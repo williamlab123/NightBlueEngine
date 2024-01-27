@@ -12,7 +12,7 @@ namespace NightBlueEngine
 
         #region Welcome
 
-        static float codeVersion = 0.1f;
+        static float  codeVersion = 0.1f;
         static string hello = $"Hello, this is the NightBlueEngine version {codeVersion}";
         static string info = "For more info, please read our documentation";
         static string doubt = "For a list of commands, type 'help'";
@@ -25,13 +25,17 @@ namespace NightBlueEngine
 
 
 
-
-
         static void Main()
         {
 
             // string lista = ListMethods();
             // System.Console.WriteLine($"alo {lista}");
+
+
+            // HttpListener listener = new HttpListener();
+            // listener.Prefixes.Add("http://localhost:8080/");
+            // listener.Start();
+            // HttpListenerContext context = listener.GetContext();
 
 
 
@@ -46,11 +50,10 @@ namespace NightBlueEngine
             #endregion
 
 
-            // System.Console.WriteLine($"This is the body {test}");
-            // System.Console.WriteLine($"test {Api.LastUrl}");
-            apiConnect();
 
-            static string ListMethods()
+            apiConnect(); //static method
+
+            static string listMethods()
             {
                 var methods = typeof(Simulation).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
                 // foreach (var method in methods)
@@ -60,37 +63,10 @@ namespace NightBlueEngine
                 return string.Join(", ", methods.Select(m => m.Name));
             }
 
-            #region Routes
-            /// This gets the url from the api and redirects to the correspinding method
-            switch (Api.LastUrl)
-            {
-                case "/":
-                    System.Console.WriteLine(badRequest);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine(ListMethods());
-                    Console.ResetColor();
 
-                    break;
-                case "/simulatespeed":
-                    Simulation.simulateSpeed(Api.LastRequestbody.Power, Api.LastRequestbody.Weight,
-                    Api.LastRequestbody.AerodynamicCoefficient);
-                    break;
-                case "/simulatepower":
-                    Simulation.simulatePower(Api.LastRequestbody.CurrentPower, Api.LastRequestbody.PsiTurbo,
-                     Api.LastRequestbody.Displacement, Api.LastRequestbody.TurboEfficiency,
-                     Api.LastRequestbody.AirFuelRatio);
-                    break;
 
-                case "/simulatetts":
-                    Simulation.timeToGet100(Api.LastRequestbody.Power, Api.LastRequestbody.Weight,
-                    Api.LastRequestbody.Tork);
-                    break;
-            }
-            #endregion
 
         }
-
-
         // static string redirect(string path)
         // {
         //     switch (path)
@@ -109,7 +85,7 @@ namespace NightBlueEngine
         //     }
         // }
 
-        static void Test()
+        static void test()
         {
             Console.WriteLine("HOJE É SECSU NA RAVE");
         }
@@ -124,17 +100,20 @@ namespace NightBlueEngine
         /// connects to the api 
         /// </summary>
         /// <param name="name">diozrshgdjne</param>
-        public static string apiConnect()
+        public static void apiConnect()
         {
-            Api.Server();
-            if (Api.Server())
+            Api api = new Api();
+
+            
+            // api.server();
+            if (api.server())
             {
                 Console.Clear();
                 System.Console.WriteLine("Server is stopping");
                 // System.Environment.Exit(0);
             }
-            string test = Api.body;
-            return test;
+            // string test = Api.body;
+            
         }
 
 
